@@ -1,6 +1,7 @@
 # Wearable Device에서 API를 받아와서 사용하는 방법을 정리함.
 
 갤럭시워치(Wear OS)에서 health connect 사용 시 : 기본적인 심박수나 수면 데이터를 가져올 수 있음
+
 스마트폰(Android)에서 Samsung Health 어플 설치 시 : 그 외에 
 
 수면 단계 분석 (얕은 수면, 깊은 수면, 렘 수면 등)
