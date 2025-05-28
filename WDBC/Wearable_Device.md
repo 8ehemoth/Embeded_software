@@ -54,118 +54,101 @@ https://demat.tistory.com/77
 
 
 3. health connect(https://charlie-dev.tistory.com/14, https://developer.android.com/health-and-fitness/guides/health-connect?hl=ko)
-    Client Apps
-    
-    우리가 개발하는 앱을 SDK와 연결시키켜 API를 이용하여 SDK를 통해서 데이터를 저장 및 불러오는 요청을 하게되고 데이터를 제공 받게 된다.
-    
-     
-    
-    SDK
-    
-    SDK는 클라이언트앱으로 부터 API 요청을 받게 되고 IPC(프로세스간 통신)을 통하여 Health ConnectAPK와 통신하게 된다.
-    
-     
-    
-    Health Connect APK
-    
-    Health Connect APK는 Health Connect API의 실체라고 할 수 있다  여기서 권한요청 및 데이터를 관리한다.
-    
-    Google Fit과 다른점이 있는데 Google Fit은 계정 중심 이어서 구글계정정보가 필수 사항이었지만 Health Connect는 기기중심이라 구글계정 없이 직접적으로 장치에서 사용 가능하다는 점이 있다.
-    
-     
-    
-    Permissions management
-    
-    앱이 데이터 표시에 대한 사용자 권한 요청 인터페이스가 포함되어 있다. 이를 통해서 권한 부여나 거부된 권한에 대한 액세스를 보다 쉽게 제어 할 수 있다.
-    
-     
-    
-    Data management
-    
-    사용자 걸음수, 심박수 , 사이클링 속도 등등 지원되는 데이터 유형 관계없이 기록된 데이터를 제공하는 사용자 인터페이스를 제공한다.
-    
-     
-    
-     
-    
-     
-    SupportAPI Level
-    Health Connect 는 안드로이드 9 (Pie/ SDK 28 ) 부터 지원한다.
-    
-     
-    
-     
-    
-     
-    Developer functionality
-     
-    
-    CRUD operations on record and data synchronization
-    
-    기록된 데이터를 추가, 수정, 삭제 기능을 제공하고 클라이언트 앱이 Health Connect에 데이터를 받아 동기화 할 수 있는 기능도 제공한다.
-    
-    데이터 변경에 대한 로그도 생성하여 어떤 앱에서 어떤 유형의 데이터가 삽입, 삭제 되었는지 알 수 있다.
-    
-     
-    
-    Simple aggregation functions
-    
-    Health Connect 를 통하여 클라이언트앱은 데이터 집계기능을 사용할 수 있다.
-    
-    1.평균, 최대, 최소 값 (예 : 운동 수행중 최대 심박수)
-    
-    2.합계(예 : 일일 총 걸음수)
-    
-    3.기본 측정수의 카운트 다운 (예 : 주에 러닝을 몇번 뛰었는지?)(추측)
-    
-    4.지원되는 데이터 유형에 대한 총 지속시간 (예 : 수면 시간 )
-    
-     
-    
-    Availability checks
-    
-    SDK를 이용해서 현재 장치에서 Health Connect를 사용 할 수 있는지 여부를 체크 할 수 있다. ( Health Connect를 사용가능한 API Level은 SDK 28/Pie 이상 )
-    
-     
-    
-    Permission checks
-    
-    Health Connect 를 사용하여 피트니스 및 건강 데이터 읽기/쓰기를 하려면  사용자의 권한을 요청하여야 한다. 이미 부여하거나 거부한 권한을 확인 할 수 있다.
-    
-     
-    
-     
-    
-    Period
-    데이터 조회는 최대 30일 전까지 등록되어있는 데이터를 조회가능 하고 데이터 쓰기는 모든 시간 범위에 쓰기가 가능하다.
 
-보통적으로
+    헬스커넥트는 health services api를 사용하는 wear os 에서 사용 불가하다
 
-첫번째 방법 : 삼성 헬스 서비스 연동:
-SDK 사용:
-삼성에서 제공하는 SDK를 사용하여 갤럭시 워치 앱에서 심박수, 걸음 수, 수면 등 다양한 건강 데이터를 가져올 수 있습니다.
-Health Services API:
-Wear OS 기반 기기에서 건강 데이터를 접근하려면 Health Services API를 사용해야 합니다.
-앱 개발:
-삼성 헬스 서비스 연동을 통해 유용한 건강 앱을 개발할 수 있습니다.
+    헬스커넥트는 android 9 (api28)이상부터 적용가능하다
+    
+    구글 play 서비스가 설치되어야 하는 등 특정 호환성 요구사항이 있다(애플은 안된다~)
+    
+    헬스커넥트sdk 는 오직 코틀린으로만 사용가능하다
+    
+    첫 권한 요청 전의 최대 30일 전까지의 데이터만 읽는것이 가능하다
+    
+     
+    
+    Health Connect SDK 자체는 android 8 부터 지원되는데 얘를 쓸라면 꼭 있어야되는 헬스커넥트 앱이 android9 부터 지원되므로 사실상 health connect 는 android 9 부터 쓸수있다고 보면된다
+
+4. Health Services on Wear OS (https://stackoverflow.com/questions/76710253/confusions-on-reading-health-data-from-wear-os-watch-on-android)
+
+안드로이드 wear OS에서 health 데이터를 받아오는 방법을 물어보는 질문에 이렇게 답변이 달림
+
+    Health Connect will allow you to read data from the Samsung Health app only if the Samsung Health app writes that data type to Health Connect. This guide can help you understand which situations Health Connect is best suited for.
+    
+    If you want to read data directly from the Galaxy Watch (and other Wear OS devices) while the exercise is in progress, you should consider using the Health Services for Wear OS API and create a Wear OS app, then connect that app to your mobile app. Samples are in the same repository.
+    
+    Now to get data from watch to mobile you can use:
+    
+    Wearable Data Layer API or
+    Send data using the network.
+    This link has details on both options: developer.android.com/training/wearables/data/data-layer
+
+    (한글로)
+    Health Connect를 사용하면 Samsung Health 앱에서 해당 데이터 유형을 Health Connect에 기록하는 경우에만 Samsung Health 앱에서 데이터를 읽을 수 있습니다. 이 가이드는 Health Connect가 어떤 상황에 가장 적합한지 이해하는 데 도움이 될 수 있습니다.
+
+    운동 중에 Galaxy Watch(및 다른 Wear OS 기기)에서 직접 데이터를 읽으려면 Wear OS용 Health Services API를 사용하여 Wear OS 앱을 만든 후, 해당 앱을 모바일 앱에 연결하는 것을 고려해 보세요. 샘플은 동일한 저장소 에 있습니다 .
+    
+    이제 시계에서 모바일로 데이터를 가져오려면 다음을 사용할 수 있습니다.
+    
+    웨어러블 데이터 계층 API 또는
+    네트워크를 사용하여 데이터를 전송합니다.
+    이 링크에는 두 옵션에 대한 세부 정보가 있습니다: developer.android.com/training/wearables/data/data-layer
+
+---
+
+## 가능성이 있는 기술은 4번 : Health Services on Wear OS
+다른 방법은 제휴(파트너쉽 체결), 서비스 중단, 별도의 스마트폰 어플리케이션 설치와 같은 문제점을 갖고 있음
+이 중에서 워치에서 바로 데이터를 전송할 수 있는 방법인 4번을 채택하게 되었음
+<img width="877" alt="스크린샷 2025-05-28 오후 9 20 05" src="https://github.com/user-attachments/assets/dc4f97fb-d4f8-4888-a8e6-d1654b18bb79" />
 
 
-2번째 방법 : Wear OS Data Layer API:
-데이터 동기화:
-Wear OS의 Data Layer API를 사용하면 스마트폰과 워치 간의 데이터 동기화를 효율적으로 처리할 수 있습니다.
-메시지 전송:
-이 API는 메시지 전송 기능도 제공하여 워치에서 스마트폰으로 데이터를 주고받을 수 있습니다.
-백그라운드 서비스:
-시스템은 WearableListenerService를 통해 Data Layer API를 관리하며, 데이터 전송이 필요한 경우 자동으로 서비스를 시작하고 종료합니다.
+https://developer.android.com/health-and-fitness/guides/health-services?hl=ko
 
+Google이 제공하는 `Health Services API`는 Wear OS 기반 스마트워치에서 **스마트폰 없이 건강 데이터를 직접 수집**할 수 있도록 설계된 공식 API입니다.
 
-기타:
-API KEY 관리:
-API를 사용할 때는 API 키를 안전하게 관리해야 하며, 유출 시 문제가 발생할 수 있으므로 주의해야 합니다. 
-Manifest 파일:
-갤럭시 워치 앱의 manifest 파일에 필요한 권한을 추가해야 합니다. 
-플러터 앱:
-플러터 앱에서 건강 데이터를 가져오려면 AndroidManifest.xml 파일에 권한을 추가해야 합니다. 
+---
+
+#### ✅ 기본 개요
+
+- **지원 플랫폼**: Wear OS 3 이상
+- **스마트폰 필요 여부**: ❌ 필요 없음
+- **주요 목적**: 스마트워치 단독으로 센서 데이터를 수집하고 활용
+
+---
+
+#### 🔧 제공 주요 기능
+
+| 기능 | 설명 |
+|------|------|
+| 실시간 심박수 측정 | 센서를 통해 실시간 스트리밍 가능 |
+| 걸음 수, 이동 거리 | 자동 수집 가능 |
+| 칼로리, 활동 시간 | 운동 기반 메트릭 제공 |
+| 운동 감지/기록 | 운동 시작-중지 제어, 운동 유형 지정 가능 |
+| 수면 데이터 | 수면 감지는 가능하지만 수면 단계 세부 정보는 제한됨 |
+| Passive Monitoring | 백그라운드에서 자동 데이터 수집 가능 |
+| Foreground Exercise | 운동 앱에서 실시간 데이터 수집 가능 |
+
+---
+
+#### 📦 주요 클라이언트 구성
+
+- `HealthServices.getClient(context)` → Health Services 진입점
+- `PassiveMonitoringClient` → 워치가 자동 감지한 건강 데이터를 지속 수신
+- `ExerciseClient` → 사용자가 운동 시작 시 실시간으로 메트릭 수집
+
+---
+
+#### 🧩 예시 코드 스니펫
+
+    ```kotlin
+    val healthClient = HealthServices.getClient(context)
+    val passiveClient = healthClient.passiveMonitoringClient
+    
+    val config = PassiveMonitoringConfig(
+        dataTypes = setOf(DataType.HEART_RATE_BPM)
+    )
+    
+    passiveClient.setPassiveMonitoringConfig(config)
 
 
 
