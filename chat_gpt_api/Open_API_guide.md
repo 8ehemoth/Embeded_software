@@ -51,12 +51,78 @@ print(resp.choices[0].message.content)
 
 ---
 
-## 5. 문제 해결 체크리스트
 
-| 증상 | 원인·조치 |
-|------|-----------|
-| `401 Unauthorized` | 키 오타 / 만료 → 새로 발급 |
-| `429 Rate limit` | 초당 요청 과다 → `asyncio.sleep` 백오프 |
-| `Billing hard limit reached` | Usage > 설정 한도 → Billing ▸ Usage refresh |
+## 5. 가상환경(venv) 설정
+```bash
+# Windows (PowerShell)
+python -m venv .venv
+& .\.venv\Scripts\Activate
 
-> 이 가이드라인을 따라 **API Key 발급 → `.env` 저장 → 간단 호출 스크립트** 까지 완료되면 ChatGPT API 연동 준비가 끝납니다.
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+- 활성화되면 프롬프트 앞에 `(.venv)` 표시
+
+## 6. 의존성 설치
+```bash
+pip install openai python-dotenv
+```
+> 추가로 TTS 테스트용 `sounddevice`, `pydub`, `tiktoken` 설치 가능
+
+## 7. 환경 변수 파일 생성 (`.env`)
+프로젝트 루트에 `.env` 파일을 만들고 다음 내용 입력:
+```env
+OPENAI_API_KEY=sk-********************************
+```
+- `.gitignore`에 `.env` 추가하여 비공개 유지
+
+## 8. 테스트 스크립트 작성 (`test.py`)
+```python
+import os
+from dotenv import load_dotenv
+from openai import OpenAI, OpenAIError
+
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise RuntimeError(".env에 OPENAI_API_KEY가 없습니다!")
+
+client = OpenAI(api_key=api_key)
+
+def main():
+    try:
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role":"system","content":"You are a friendly assistant."},
+                {"role":"user","content":"ChatGPT API 테스트입니다."}
+            ],
+            max_tokens=50,
+            temperature=0.5
+        )
+        print("✅ 응답:", resp.choices[0].message.content.strip())
+    except OpenAIError as e:
+        print("❌ OpenAIError:", e)
+
+if __name__ == "__main__":
+    main()
+```
+
+## 9. 실행 및 결과 확인
+```bash
+python test.py
+```
+정상 실행 시:
+```
+✅ 응답: 테스트가 잘 되었습니다!
+```
+
+
+## 10. 주요 오류 및 해결
+| 오류 코드 | 원인 | 해결 방법 |
+|-----------|------|-----------|
+| `401 Unauthorized` | 잘못된 API 키 | `.env` 키 확인 및 재발급 |
+| `429 Insufficient quota` | 예산/한도 초과 | Dashboard → Usage → Budget 상향 |
+| `Network Error` | 인터넷 연결 문제 | 연결 확인 / VPN/프록시 점검 |
+
