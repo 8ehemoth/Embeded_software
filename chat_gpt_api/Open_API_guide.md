@@ -117,6 +117,11 @@ python test.py
 ```
 ✅ 응답: 테스트가 잘 되었습니다!
 ```
+파이썬 코드 실행하면 이런식으로 답변이 뜸
+![image](https://github.com/user-attachments/assets/ee92caa5-c88d-4b99-a1d9-8cee246ac145)
+
+124토큰이 사용된 것을 확인가능
+![image](https://github.com/user-attachments/assets/6192a875-02df-4b25-a667-e9c0f60546d9)
 
 
 ## 10. 주요 오류 및 해결
