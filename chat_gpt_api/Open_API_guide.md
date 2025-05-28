@@ -64,6 +64,13 @@ source .venv/bin/activate
 ```
 - 활성화되면 프롬프트 앞에 `(.venv)` 표시
 
+##가상환경이 켜지지 않는다면?
+① VS Code PowerShell 터미널에서
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+② 가상환경 활성화
+& .\.venv\Scripts\Activate
+
 ## 6. 의존성 설치
 ```bash
 pip install openai python-dotenv
