@@ -123,4 +123,10 @@ python tts_test.py
 ![image](https://github.com/user-attachments/assets/653403e4-3fba-434f-814f-cd3c8302a021)
 
 이후 cmd에서 python tts_test_py 로 파일 실행
+![image](https://github.com/user-attachments/assets/980b1817-7ec7-45b0-b58a-dd21c0210f6d)
+
+
+https://github.com/user-attachments/assets/ca118bbf-031f-4712-a060-cbef726ae9a1
+
+
 ---
