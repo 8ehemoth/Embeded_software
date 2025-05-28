@@ -1,4 +1,4 @@
-# 핵심 개념 정리 — ChatGPT API · Prompt Caching · Embeddings  
+# ■ 핵심 개념 정리 — ChatGPT API · Prompt Caching · Embeddings  
 > 임베디드 졸음운전 방지 프로젝트용 메모  
 > (작성 2025-05-28)
 
@@ -86,7 +86,7 @@ vec = client.embeddings.create(
 | **Embedding** | 텍스트 의미를 보존하는 고차원 벡터 표현 |
 
 
-# CacheBackedEmbeddings 정리
+# ■ CacheBackedEmbeddings 정리
 > 임베디드 졸음운전 방지 프로젝트 — 벡터 캐싱 전략  
 > (작성 2025‑05‑28)
 
