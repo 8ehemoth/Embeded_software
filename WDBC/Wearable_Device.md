@@ -26,6 +26,19 @@
 
 ## 논점2. 갤럭시 워치에서 API를 통해 정보를 가져오는 방법이 무엇이 있느냐?
 
+
+## ⌚ 워치 단독으로 센서 데이터를 가져오는 방법 요약
+
+| 항목 | 방법 | API 예시 | 비고 |
+|------|------|----------|------|
+| 심박수 | `SensorManager`로 실시간 수집 | `Sensor.TYPE_HEART_RATE` | 정확하고 실시간 가능 |
+| 수면 추적 | 공식 API 미제공. 시간 기반 수면 추정 필요 | 직접 수면 시간 계산 로직 구현 필요 | 정확한 수면 단계는 어려움 |
+| 서버 전송 | HTTP 라이브러리 사용 (`HttpURLConnection`, `OkHttp` 등) | `POST` 요청 구현 | 워치에 Wi-Fi/LTE 연결 필수 |
+| BLE 송신 | GATT Server 구현 후 광고 | Android BLE API | 수신 측 장치 구현 필요 |
+| 데이터 저장 | 내부 저장소 또는 `SharedPreferences` 사용 | `openFileOutput()` 등 | 임시 저장용도 (장기 저장 어려움) |
+
+
+
 https://demat.tistory.com/77
 갤럭시워치 api 가져오는거 관련해서 정리된 블로그
 
@@ -78,34 +91,9 @@ https://demat.tistory.com/77
 갤럭시워치 api 가져오는거 관련해서 정리된 블로그
 
 
-
----
-
-
-# 갤럭시 워치 건강 데이터 수집 기능 정리
-
-
----
-
-## ⌚ 워치 단독으로 센서 데이터를 가져오는 방법 요약
-
-| 항목 | 방법 | API 예시 | 비고 |
-|------|------|----------|------|
-| 심박수 | `SensorManager`로 실시간 수집 | `Sensor.TYPE_HEART_RATE` | 정확하고 실시간 가능 |
-| 수면 추적 | 공식 API 미제공. 시간 기반 수면 추정 필요 | 직접 수면 시간 계산 로직 구현 필요 | 정확한 수면 단계는 어려움 |
-| 서버 전송 | HTTP 라이브러리 사용 (`HttpURLConnection`, `OkHttp` 등) | `POST` 요청 구현 | 워치에 Wi-Fi/LTE 연결 필수 |
-| BLE 송신 | GATT Server 구현 후 광고 | Android BLE API | 수신 측 장치 구현 필요 |
-| 데이터 저장 | 내부 저장소 또는 `SharedPreferences` 사용 | `openFileOutput()` 등 | 임시 저장용도 (장기 저장 어려움) |
-
----
-
 ## 📌 참고 요약
 
 - 워치 단독으로도 **심박수 측정 및 서버 전송**은 가능
 - 수면 데이터는 **기초적인 시간 기록 수준까지만** 가능
 - Health Connect 연동을 통해 스마트폰에서 **공식 API로 정밀 데이터 활용** 가능
 - **워치 앱 개발 시 Wear OS SDK + Android Studio** 필요
-
-
-
-개발을 원한다면 Android Studio에서 Wear OS용 앱을 따로 개발해야 합니다.
