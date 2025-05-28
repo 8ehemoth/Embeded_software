@@ -32,7 +32,7 @@ WakeMate 프로젝트에서 졸음운전 감지 후 음성 기반 상호작용�
 ## 4. ❌ Coral TPU의 한계
 
 - Coral TPU는 최대 **6MB TFLite 모델**만 실행 가능
-- 일반 STT 모델:
+- 일반 STT 모델(크기):
   - Whisper Tiny: 75MB
   - Whisper Base: 142MB
   - Whisper Large: ~1.5GB
