@@ -122,5 +122,5 @@ python tts_test.py
 ![image](https://github.com/user-attachments/assets/9a0e5ca0-6a88-47c4-9717-685069465834)
 ![image](https://github.com/user-attachments/assets/653403e4-3fba-434f-814f-cd3c8302a021)
 
-
+이후 cmd에서 python tts_test_py 로 파일 실행
 ---
