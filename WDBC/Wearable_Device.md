@@ -167,3 +167,91 @@ https://demat.tistory.com/77
 - 수면 데이터는 **기초적인 시간 기록 수준까지만** 가능
 - Health Connect 연동을 통해 스마트폰에서 **공식 API로 정밀 데이터 활용** 가능
 - **워치 앱 개발 시 Wear OS SDK + Android Studio** 필요
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 📱 Wearable Device에서 API를 통해 건강 데이터를 사용하는 방법 정리
+
+---
+
+## 🔍 논점 1. 갤럭시 워치만으로 API를 사용할 수 있느냐? vs 스마트폰에 어플 설치까지 해야 하느냐?
+
+### 📊 스마트폰 사용 여부에 따른 기능 비교
+
+| 기능 | 스마트폰 사용 시 | 스마트폰 없이 워치 단독 |
+|------|------------------|-------------------------|
+| 실시간 심박수 측정 | 가능 (Samsung Health 또는 Health Connect API) | 가능 (워치 앱에서 센서 직접 사용) |
+| 수면 감지 및 분석 | 가능 (삼성 헬스 앱 연동 필요) | 기본적인 수면 기록은 가능하나 단계 분석은 제한적 |
+| 장기 데이터 저장/분석 | 가능 (삼성 헬스 앱 기반) | 불가 (워치에 임시 저장 가능하지만 제한적) |
+| API를 통한 외부 활용 | 가능 (Health Connect API 활용) | 가능 (워치 앱에서 직접 서버 전송 구현 시) |
+| 외부 서버 전송 | 가능 (모바일 앱을 통해 송신) | 가능 (워치 앱에서 HTTP 요청 등 직접 구현 시) |
+| 앱 설치 필요 여부 | 필요 (Samsung Health, Health Connect) | 필요 (워치 전용 자체 앱 개발) |
+
+> 💡 **요약**:  
+> - **스마트폰을 사용하면 고급 분석 가능** (렘 수면, 코골이, 산소포화도 등)  
+> - **워치만 사용하면 심박수, 수면 시간 등 기본 정보만 가능**  
+> → 졸음 운전 판단 용도로는 워치 단독 수집이 더 간단하고 현실적
+
+---
+
+## 🔍 논점 2. 갤럭시 워치에서 API를 통해 정보를 직접 가져오는 방법
+
+### ⌚ 워치 단독으로 센서 데이터를 수집하는 방법 요약
+
+| 항목 | 방법 | API 예시 | 비고 |
+|------|------|----------|------|
+| 심박수 | `SensorManager` 사용 | `Sensor.TYPE_HEART_RATE` | 실시간 측정 가능 |
+| 수면 추적 | 수면 시간 추정 로직 직접 구현 | 공식 API 없음 | 단계 구분은 불가 |
+| 서버 전송 | HTTP 라이브러리 직접 사용 | `OkHttp`, `HttpURLConnection` 등 | 워치 Wi-Fi/LTE 필요 |
+| BLE 송신 | GATT 서버 구현 | Android BLE API | 수신 측 장치 필요 |
+| 데이터 저장 | 내부 저장소 | `openFileOutput()`, `SharedPreferences` 등 | 장기 저장은 부적합 |
+
+---
+
+## 🔍 참고자료 분석
+
+### 📁 1. Samsung SDK (https://developer.samsung.com/codelab)
+- 삼성 공식 SDK는 모의 데이터로만 테스트 가능
+- 실 데이터 접근은 **삼성과 파트너십 필요** → 일반 개발자에게는 현실적으로 어려움
+
+### 📁 2. Health Platform API
+- 과거 API이며 현재는 **Health Connect로 통합**
+- 더 이상 신규 프로젝트에 권장되지 않음
+
+### 📁 3. Health Connect (https://developer.android.com/health-and-fitness/guides/health-connect)
+- Wear OS에서는 사용 불가
+- Android 9 이상 + Play 서비스 필요
+- 삼성 헬스가 Health Connect에 기록하지 않으면 해당 데이터 접근 불가
+
+### 📁 4. Health Services on Wear OS (✅ 선택된 방법)
+- Google 공식 API
+- **Wear OS 3 이상**에서 동작
+- **워치 단독으로 센서 데이터 수집 및 처리 가능**
+- 실시간 측정 및 운동 중 메트릭 수집 지원
+- 외부 서버 전송은 앱에서 직접 구현 필요
+
+```kotlin
+val healthClient = HealthServices.getClient(context)
+val passiveClient = healthClient.passiveMonitoringClient
+
+val config = PassiveMonitoringConfig(
+    dataTypes = setOf(DataType.HEART_RATE_BPM)
+)
+passiveClient.setPassiveMonitoringConfig(config)
