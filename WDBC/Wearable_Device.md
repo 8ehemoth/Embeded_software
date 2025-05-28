@@ -48,9 +48,12 @@ https://demat.tistory.com/77
 -    - https://developer.samsung.com/codelab
      - 대신 이 codelab이라는 공간 안에서는 모의 라이브러리만 사용할 수 있고(모의데이터를 통한 코드 실행), 진짜로 데이터를 사용하려면 삼성이랑 파트너쉽을 맺어야함 -> 좀 어려운 부분이라 다른 방법을 찾아야할 것 같음.
  
+- 2. health platform api(https://developer.android.com/health-and-fitness/guides/health-services/health-platform?hl=ko)
+      - 이 api는 현재 새로운 health connect라는게 생겨서 유지보수 중단되었다고한다
+      - <img width="851" alt="image" src="https://github.com/user-attachments/assets/0b36f0b0-b194-42bd-9b9f-d71646890175" />
 
 
-  3. 
+- 3. 
 
 보통적으로
 
