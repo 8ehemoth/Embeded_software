@@ -85,3 +85,115 @@ vec = client.embeddings.create(
 | **Prompt Caching** | 동일 프롬프트 prefix 재사용 시 입력 토큰 50 % 할인 |
 | **Embedding** | 텍스트 의미를 보존하는 고차원 벡터 표현 |
 
+
+# CacheBackedEmbeddings 정리
+> 임베디드 졸음운전 방지 프로젝트 — 벡터 캐싱 전략  
+> (작성 2025‑05‑28)
+
+---
+
+## 0. 왜 ‘임베딩 캐시’가 필요할까? 🧐
+- **임베딩(Embedding)** : 문장·문서를 숫자 벡터로 변환한 결과  
+- 한 번 계산할 때마다 **시간(수 백 ms)** · **토큰 비용** 발생  
+- **같은 텍스트**를 반복 임베딩할 경우, _이전 결과_를 저장해 두면 **속도 ↑ / 비용 0**  
+
+---
+
+## 1. CacheBackedEmbeddings 한눈에 보기
+| 구성 요소 | 설명 |
+|-----------|------|
+| **underlying_embeddings** | 실제 벡터를 계산하는 엔진 (예: `OpenAIEmbeddings`) |
+| **ByteStore** | `(키, 벡터)`를 저장하는 캐시 — 로컬파일, 메모리, Redis… |
+| **namespace** | “임베딩 모델 이름” 같은 구분자<br>→ **같은 문장**을 다른 모델로 임베딩해도 **키 충돌** 방지 |
+| **동작 로직** | 1️⃣ 문장을 해시 → 키 생성<br>2️⃣ 캐시에 키 존재? → HIT라면 저장된 벡터 반환<br>3️⃣ MISS라면 엔진으로 계산 → 캐시에 저장 후 반환 |
+
+```mermaid
+flowchart LR
+    A[문장 입력] --> B{캐시에 키 있음?}
+    B -- Yes --> C[저장된 벡터 반환]
+    B -- No  --> D[underlying_embeddings 계산]
+    D --> E[캐시에 벡터 저장] --> C
+```
+
+---
+
+## 2. 저장소(ByteStore) 선택
+| ByteStore | 지속성 | 사용 예 |
+|-----------|--------|---------|
+| `LocalFileStore("./cache/")` | 영구 (디스크) | 프로덕션·노트북 실험 결과 재사용 |
+| `InMemoryByteStore()` | 휘발성 (RAM) | 단위 테스트·임시 스크립트 |
+| Redis / S3 등 | 네트워크 | 다중 서버·분산 환경 |
+
+---
+
+## 3. 로컬 파일 캐시 예제
+
+```python
+from langchain.storage import LocalFileStore
+from langchain_openai import OpenAIEmbeddings
+from langchain.embeddings import CacheBackedEmbeddings
+
+# ① 기본 임베딩 엔진
+embedding = OpenAIEmbeddings()                # ex. text-embedding-ada-002
+
+# ② 파일 기반 캐시
+store = LocalFileStore("./cache/")
+
+# ③ 캐시 래퍼 생성
+cached_embedder = CacheBackedEmbeddings.from_bytes_store(
+    underlying_embeddings=embedding,
+    document_embedding_cache=store,
+    namespace=embedding.model
+)
+
+# 첫 호출 → API 계산 & 저장
+vec1 = cached_embedder.embed_query("졸음운전 방지 시스템")
+
+# 두번째 호출 → 파일 캐시 HIT (수 ms)
+vec2 = cached_embedder.embed_query("졸음운전 방지 시스템")
+```
+
+---
+
+## 4. 메모리 캐시 예제
+
+```python
+from langchain.storage import InMemoryByteStore
+cached_embedder = CacheBackedEmbeddings.from_bytes_store(
+    embedding, InMemoryByteStore(), namespace=embedding.model
+)
+```
+> 🚧 프로세스 종료 시 캐시 삭제 — 테스트용으로 적합.
+
+---
+
+## 5. 캐시 효과 체감 💡
+| 호출 | 처리 시간 | 비용 |
+|------|-----------|------|
+| **1 회차** | 300–500 ms (API) | 정상 토큰 과금 |
+| **2 회차** | **1–5 ms** (캐시 HIT) | 0 |
+
+---
+
+## 6. ChatGPT API에 적용하기
+- 개념 자체는 **“같은 입력이면 같은 출력 사용”** → 가능  
+- 구현 방식  
+  1. 전체 프롬프트를 SHA‑256 해시 → SQLite/Redis 캐시  
+  2. 키 존재 시 API 호출 생략, 저장된 JSON 답변 반환  
+- **주의**  
+  - GPT 답변은 확률적 → `temperature=0` 같이 결정적 세팅이 아니면 내용이 달라질 수 있음  
+  - 버전·시스템 프롬프트가 바뀌면 캐시 무효화 필요  
+
+---
+
+## 7. CacheBackedEmbeddings vs Cache vs Embedding
+| 항목 | 정의 | 비고 |
+|------|------|------|
+| **Embedding** | 문장 → 벡터 **결과물** | 계산 시 비용·시간 발생 |
+| **Cache** | **이미 계산한 값**을 저장하는 **보관함** | 내용물은 아무 타입이나 가능 |
+| **CacheBackedEmbeddings** | “Embedding + Cache”를 묶은 **전용 래퍼** | 해시·네임스페이스·저장포맷까지 규격화 |
+
+> 한 줄 요약 : **CacheBackedEmbeddings = “임베딩 전용 캐시 관리자”**  
+> → 반복 임베딩 작업에서 **속도 ↑ / 비용 ↓ / 코드 간소화**!
+
+---
