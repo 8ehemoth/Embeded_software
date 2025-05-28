@@ -40,22 +40,104 @@
 
 
 https://demat.tistory.com/77
-갤럭시워치 api 가져오는거 관련해서 정리된 블로그
+갤럭시워치 api 가져오는거 관련해서 정리된 블로그. 여기 내용에서 참고하자면 
 
-여기 내용에서 참고하자면 
 
 1. 삼성에서 공식 지원하는 SDK
     - https://developer.samsung.com/codelab
     - 대신 이 codelab이라는 공간 안에서는 모의 라이브러리만 사용할 수 있고(모의데이터를 통한 코드 실행), 진짜로 데이터를 사용하려면 삼성이랑 파트너쉽을 맺어야함 -> 좀 어려운 부분이라 다른 방법을 찾아야할 것 같음.
+
  
 2. health platform api(https://developer.android.com/health-and-fitness/guides/health-services/health-platform?hl=ko)
-      - 이 api는 현재 새로운 health connect라는게 생겨서 유지보수 중단되었다고한다
-      - <img width="851" alt="image" src="https://github.com/user-attachments/assets/0b36f0b0-b194-42bd-9b9f-d71646890175" />
+    - 이 api는 현재 새로운 health connect라는게 생겨서 유지보수 중단되었다고한다
+    - <img width="851" alt="image" src="https://github.com/user-attachments/assets/0b36f0b0-b194-42bd-9b9f-d71646890175" />
 
 
-- 3. health connect(https://charlie-dev.tistory.com/14, https://developer.android.com/health-and-fitness/guides/health-connect?hl=ko)
--    -
-  5. 
+3. health connect(https://charlie-dev.tistory.com/14, https://developer.android.com/health-and-fitness/guides/health-connect?hl=ko)
+    Client Apps
+    
+    우리가 개발하는 앱을 SDK와 연결시키켜 API를 이용하여 SDK를 통해서 데이터를 저장 및 불러오는 요청을 하게되고 데이터를 제공 받게 된다.
+    
+     
+    
+    SDK
+    
+    SDK는 클라이언트앱으로 부터 API 요청을 받게 되고 IPC(프로세스간 통신)을 통하여 Health ConnectAPK와 통신하게 된다.
+    
+     
+    
+    Health Connect APK
+    
+    Health Connect APK는 Health Connect API의 실체라고 할 수 있다  여기서 권한요청 및 데이터를 관리한다.
+    
+    Google Fit과 다른점이 있는데 Google Fit은 계정 중심 이어서 구글계정정보가 필수 사항이었지만 Health Connect는 기기중심이라 구글계정 없이 직접적으로 장치에서 사용 가능하다는 점이 있다.
+    
+     
+    
+    Permissions management
+    
+    앱이 데이터 표시에 대한 사용자 권한 요청 인터페이스가 포함되어 있다. 이를 통해서 권한 부여나 거부된 권한에 대한 액세스를 보다 쉽게 제어 할 수 있다.
+    
+     
+    
+    Data management
+    
+    사용자 걸음수, 심박수 , 사이클링 속도 등등 지원되는 데이터 유형 관계없이 기록된 데이터를 제공하는 사용자 인터페이스를 제공한다.
+    
+     
+    
+     
+    
+     
+    SupportAPI Level
+    Health Connect 는 안드로이드 9 (Pie/ SDK 28 ) 부터 지원한다.
+    
+     
+    
+     
+    
+     
+    Developer functionality
+     
+    
+    CRUD operations on record and data synchronization
+    
+    기록된 데이터를 추가, 수정, 삭제 기능을 제공하고 클라이언트 앱이 Health Connect에 데이터를 받아 동기화 할 수 있는 기능도 제공한다.
+    
+    데이터 변경에 대한 로그도 생성하여 어떤 앱에서 어떤 유형의 데이터가 삽입, 삭제 되었는지 알 수 있다.
+    
+     
+    
+    Simple aggregation functions
+    
+    Health Connect 를 통하여 클라이언트앱은 데이터 집계기능을 사용할 수 있다.
+    
+    1.평균, 최대, 최소 값 (예 : 운동 수행중 최대 심박수)
+    
+    2.합계(예 : 일일 총 걸음수)
+    
+    3.기본 측정수의 카운트 다운 (예 : 주에 러닝을 몇번 뛰었는지?)(추측)
+    
+    4.지원되는 데이터 유형에 대한 총 지속시간 (예 : 수면 시간 )
+    
+     
+    
+    Availability checks
+    
+    SDK를 이용해서 현재 장치에서 Health Connect를 사용 할 수 있는지 여부를 체크 할 수 있다. ( Health Connect를 사용가능한 API Level은 SDK 28/Pie 이상 )
+    
+     
+    
+    Permission checks
+    
+    Health Connect 를 사용하여 피트니스 및 건강 데이터 읽기/쓰기를 하려면  사용자의 권한을 요청하여야 한다. 이미 부여하거나 거부한 권한을 확인 할 수 있다.
+    
+     
+    
+     
+    
+    Period
+    데이터 조회는 최대 30일 전까지 등록되어있는 데이터를 조회가능 하고 데이터 쓰기는 모든 시간 범위에 쓰기가 가능하다.
 
 보통적으로
 
