@@ -106,7 +106,7 @@ def text_to_korean_speech(text: str, filename: str = "output_korean.mp3"):
 
 if __name__ == "__main__":
     # Google 서비스 키 경로 수동 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\\Users\\Kim\\Downloads\\ambient-topic-461211-s1-90ff790bef2f.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "경로\your-key.json"
 
     user_prompt = input("💬 ChatGPT에게 질문하세요 (한글): ")
     answer = get_chatgpt_response(user_prompt)
@@ -151,7 +151,7 @@ OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxx
    `test_gpt_voice.py`의 경로를 아래처럼 수정:
 
 ```python
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\\Users\\Kim\\Downloads\\your-key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "경로\your-key.json"
 ```
 
 ## ▶️ 실행
@@ -177,23 +177,3 @@ python test_gpt_voice.py
 
 ````
 
----
-
-## ✅ 7. Git에 올리기
-```bash
-git init
-git add .
-git commit -m "Initial commit: ChatGPT + Google TTS Korean voice"
-git remote add origin https://github.com/your-username/My_project.git
-git push -u origin main
-````
-
----
-
-필요하시면:
-
-* `playsound`를 이용한 자동 음성 재생
-* 다국어 TTS 지원
-* GUI 버전(Tkinter, Streamlit 등)도 만들어드릴 수 있어요.
-
-말씀만 주세요!
