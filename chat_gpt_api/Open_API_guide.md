@@ -1,7 +1,7 @@
 # OpenAI API Key 발급 & 사용 가이드
 > 졸음운전 방지 프로젝트 — ChatGPT 모듈 준비용  
 > (v 2025 ‑ 05 ‑ 28)
-
+https://platform.openai.com/usage
 ---
 
 ## 1. API Key 발급 절차
