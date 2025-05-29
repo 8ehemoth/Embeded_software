@@ -176,9 +176,7 @@ python test_gpt_voice.py
 * 음성 재생 기능 추가 (playsound 등)
 
 ````
-## 실행결과
-![image](https://github.com/user-attachments/assets/fa3e650a-5216-4b03-922e-eb2ba88054e5)
-![image](https://github.com/user-attachments/assets/2dd2611c-ffcf-4b4c-b926-e8256ce0b85e)
+실행결과
 ![image](https://github.com/user-attachments/assets/a90df477-a012-4284-a35c-4e41ef9da06f)
 
 
