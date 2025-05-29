@@ -12,7 +12,7 @@
 
 chat gpt api로 설명하면 만들어진 챗봇(chat gpt)에 우리가 접속할 수 있도록 도와주는게 chat gpt api인듯. 
 즉 우리 애플리케이션(졸음 운전 방지 시스템)이 ChatGPT라는 챗봇 서비스를 손쉽게 이용할 수 있게 해 주는 게 바로 ChatGPT API의 역할
-https://dev-dain.tistory.com/50
+> https://dev-dain.tistory.com/50
 
 ---
 ## 1. ChatGPT API (*Chat Completions*)
