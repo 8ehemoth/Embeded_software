@@ -1,4 +1,4 @@
-좋습니다! 아래는 **OpenAI API 키와 Google Cloud 서비스 계정 키 JSON 파일을 사용한 TTS 프로젝트**를 GitHub에 올리는 전체 과정을 `.gitignore` 설정부터 `README.md`, 디렉토리 구성까지 포함해 **VSCode 환경 기준 Git 프로젝트 형식**으로 정리해 드립니다.
+좋습니다! 아래는 **OpenAI API 키와 Google Cloud 서비스 계정 키 JSON 파일을 사용한 TTS 프로젝트**를 디렉토리 구성까지 포함해 **VSCode 환경 기준 Git 프로젝트 형식**으로 정리해 드립니다.
 
 ---
 
@@ -115,29 +115,7 @@ if __name__ == "__main__":
     text_to_korean_speech(answer)
 ```
 
----
 
-## ✅ 6. `README.md` 예시
-
-````markdown
-# GPT Chat + Google TTS (Korean Voice)
-
-이 프로젝트는 OpenAI ChatGPT API와 Google Cloud Text-to-Speech를 활용하여 자연스러운 한국어 음성(mp3)을 생성합니다.
-
-## 💡 기능
-- ChatGPT로부터 질문에 대한 응답을 생성
-- Google TTS를 통해 응답을 MP3로 저장 (ko-KR-Wavenet-C 사용)
-- 한국어 지원
-
-## 🛠️ 설치
-
-```bash
-git clone https://github.com/your-username/My_project.git
-cd My_project
-python -m venv .venv
-.venv\Scripts\activate   # 또는 source .venv/bin/activate
-pip install -r requirements.txt
-````
 
 ## 🔐 환경 변수 설정
 
@@ -175,8 +153,11 @@ python test_gpt_voice.py
 * 다회 입력 지원
 * 음성 재생 기능 추가 (playsound 등)
 
-````
+
 실행결과
 ![image](https://github.com/user-attachments/assets/a90df477-a012-4284-a35c-4e41ef9da06f)
+
+https://github.com/user-attachments/assets/9616ca02-8b29-4889-9825-8f660aea728e
+
 
 
