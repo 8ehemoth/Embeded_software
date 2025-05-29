@@ -155,7 +155,7 @@ python test_gpt_voice.py
 
 
 실행결과
-![image](https://github.com/user-attachments/assets/a90df477-a012-4284-a35c-4e41ef9da06f)
+![image](https://github.com/user-attachments/assets/67ece3b9-b01e-4b76-9078-e63c03b1c7df)
 
 https://github.com/user-attachments/assets/9616ca02-8b29-4889-9825-8f660aea728e
 
