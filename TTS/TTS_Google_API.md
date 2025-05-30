@@ -108,18 +108,15 @@ python tts_test.py
 
 ### 1. Google Cloud 프로젝트 생성 및 TTS API 활성화
 * ![image](https://github.com/user-attachments/assets/e29aaa54-cef8-49bd-bca9-00fc3e75164c)
-![image](https://github.com/user-attachments/assets/264e26b3-b2ff-41cf-b71d-0e3d2b002000)
 ![image](https://github.com/user-attachments/assets/0d46c53a-ac95-4af6-ab51-6397c8b16102)
 ![image](https://github.com/user-attachments/assets/cd248236-ef40-469c-9dcc-cc8f6df16046)
 ![image](https://github.com/user-attachments/assets/dba5a4d6-54b7-4ba4-845c-5ae6acf40604)
 ### 2. 서비스 계정 키(JSON) 생성
 ![image](https://github.com/user-attachments/assets/f12b74a0-8912-48d8-af5e-f71d301f8f71)
 ![image](https://github.com/user-attachments/assets/324e277d-6cf4-4190-a56d-357d015b0485)
-![image](https://github.com/user-attachments/assets/e3a0ab27-e10b-4d9e-9661-c11864ef605c)
-![image](https://github.com/user-attachments/assets/cc4f221d-69af-4b16-8732-496de2bea13f)
+
 키 생성 후 JSON 다운로드
 
-![image](https://github.com/user-attachments/assets/9a0e5ca0-6a88-47c4-9717-685069465834)
 ![image](https://github.com/user-attachments/assets/653403e4-3fba-434f-814f-cd3c8302a021)
 
 이후 cmd에서 python tts_test_py 로 파일 실행
