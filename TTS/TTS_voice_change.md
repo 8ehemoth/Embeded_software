@@ -83,4 +83,16 @@ with open("output.mp3", "wb") as out:
 
 
 
+https://github.com/user-attachments/assets/d0372fb3-0185-41b7-ada3-d03368e9b8e4
+
+
+
+https://github.com/user-attachments/assets/6877b65d-5c64-4458-bf04-c7b3d9b11299
+
+
+
+https://github.com/user-attachments/assets/ab794432-9bd5-4ffb-973e-bbf16ae16284
+
+
+
 
